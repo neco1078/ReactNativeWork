@@ -7,12 +7,13 @@ import {
   Image,
 } from "react-native";
 import { useState } from "react";
+
+import Loading from "./src/components/Loading";
 export default function App() {
   const [name, setName] = useState("");
   const [lastName, setLastName] = useState("");
   const [result, setResult] = useState("");
-  console.log(name);
-  console.log(lastName);
+  const [isLoading, setIsLoading] = useState(false);
   return (
     <View style={styles.container}>
       <Image
@@ -42,10 +43,11 @@ export default function App() {
           { backgroundColor: pressed ? "gray" : "blue" },
           styles.button,
         ]}
-        onPress={() => setResult(name + " " + lastName)}
+        onPress={() => setIsLoading(true)}
       >
         <Text style={styles.buttonText}>Login</Text>
       </Pressable>
+      {isLoading ? <Loading changeIsLoading={()=>setIsLoading(false)} /> : null}
     </View>
   );
 }
