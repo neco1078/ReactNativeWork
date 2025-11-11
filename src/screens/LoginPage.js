@@ -16,11 +16,12 @@ const LoginPage = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(false);
   return (
     <View style={styles.container}>
+      <Text style={styles.welcome}>Welcome {result}</Text>
       <Image
         style={styles.image}
         source={require("../../assets/images/login-icon.png")}
       />
-      <Text style={styles.welcome}>Welcome {result}</Text>
+
       <View style={styles.inputContainer}>
         <Text style={styles.inputBoxText}>Email</Text>
         <TextInput
@@ -52,7 +53,7 @@ const LoginPage = ({ navigation }) => {
       </Pressable>
       <Pressable
         style={({ pressed }) => [
-          { backgroundColor: pressed ? "gray" : "lightgray", marginTop: 50 },
+          { backgroundColor: pressed ? "lightgray" : "gray", marginTop: 50 },
           styles.signupButton,
         ]}
         onPress={() => navigation.navigate("Signup")}
@@ -69,24 +70,24 @@ export default LoginPage;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "tomato",
     alignItems: "center",
     justifyContent: "center",
   },
   inputContainer: {
     width: "80%",
-    borderWidth: 2,
   },
   textInputStyle: {
     height: 50,
     borderColor: "gray",
-    borderWidth: 1,
+    borderBottomWidth: 0.5,
+    borderColor: "white",
     width: "100%",
     borderRadius: 10,
     marginVertical: 10,
     paddingLeft: 10,
     textAlign: "center",
-    color: "blue",
+    color: "white",
   },
   button: {
     borderWidth: 1,
@@ -95,6 +96,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
     justifyContent: "center",
+    marginTop: 20,
   },
   buttonText: {
     fontSize: 20,
@@ -104,10 +106,13 @@ const styles = StyleSheet.create({
   image: {
     width: 100,
     height: 100,
+    marginBottom: 20,
   },
   welcome: {
     fontWeight: "bold",
-    fontSize: 26,
+    fontSize: 30,
+    marginBottom: 30,
+    color: "white",
   },
   signupButton: {
     borderWidth: 1,
@@ -116,6 +121,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
     justifyContent: "center",
+    color: "white",
   },
-  inputBoxText: { fontWeight: "bold", alignSelf: "flex-start" },
+  inputBoxText: { fontWeight: "bold", alignSelf: "flex-start", color: "white" },
 });
