@@ -8,10 +8,10 @@ import {
 } from "react-native";
 import { useState } from "react";
 
-import Loading from "../components/Loading";
+import { Loading, CustomTextInput } from "../components/";
 const LoginPage = ({ navigation }) => {
-  const [name, setName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [result, setResult] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   return (
@@ -21,27 +21,21 @@ const LoginPage = ({ navigation }) => {
         style={styles.image}
         source={require("../../assets/images/login-icon.png")}
       />
+      <CustomTextInput
+        title="Email"
+        isSecureText={false}
+        handleOnChangeText={setEmail}
+        handleValue={email}
+        handlePlaceholder="Enter Your Email"
+      />
+      <CustomTextInput
+        title="Password"
+        isSecureText={true}
+        handleOnChangeText={setPassword}
+        handleValue={password}
+        handlePlaceholder="Enter Your Password"
+      />
 
-      <View style={styles.inputContainer}>
-        <Text style={styles.inputBoxText}>Email</Text>
-        <TextInput
-          inputMode="email"
-          placeholder="Enter Your Email"
-          style={styles.textInputStyle}
-          onChangeText={(value) => setName(value)}
-          value={name}
-        />
-      </View>
-      <View style={styles.inputContainer}>
-        <Text style={styles.inputBoxText}>Password</Text>
-        <TextInput
-          secureTextEntry={true}
-          placeholder="Enter Your Password"
-          style={styles.textInputStyle}
-          onChangeText={setLastName}
-          value={lastName}
-        />
-      </View>
       <Pressable
         style={({ pressed }) => [
           { backgroundColor: pressed ? "gray" : "blue" },
@@ -77,18 +71,7 @@ const styles = StyleSheet.create({
   inputContainer: {
     width: "80%",
   },
-  textInputStyle: {
-    height: 50,
-    borderColor: "gray",
-    borderBottomWidth: 0.5,
-    borderColor: "white",
-    width: "100%",
-    borderRadius: 10,
-    marginVertical: 10,
-    paddingLeft: 10,
-    textAlign: "center",
-    color: "white",
-  },
+
   button: {
     borderWidth: 1,
     width: "80%",
@@ -123,5 +106,4 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     color: "white",
   },
-  inputBoxText: { fontWeight: "bold", alignSelf: "flex-start", color: "white" },
 });
