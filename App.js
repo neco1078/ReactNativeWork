@@ -1,4 +1,11 @@
-import { StyleSheet, Text, View, TextInput, Pressable,Image } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  Pressable,
+  Image,
+} from "react-native";
 import { useState } from "react";
 export default function App() {
   const [name, setName] = useState("");
@@ -8,18 +15,24 @@ export default function App() {
   console.log(lastName);
   return (
     <View style={styles.container}>
-      <Text>Welcome {result}</Text>
-      <Text>Name</Text>
+      <Image
+        style={styles.image}
+        source={require("./assets/images/login-icon.png")}
+      />
+      <Text style={styles.welcome}>Welcome {result}</Text>
+      <Text>Email</Text>
       <TextInput
-        placeholder="Enter Your Name"
+        inputMode="email"
+        placeholder="Enter Your Email"
         style={styles.textInputStyle}
         onChangeText={(value) => setName(value)}
         value={name}
-        // keyboardType="numeric"
+        keyboardType="default"
       />
-      <Text>Last Name</Text>
+      <Text>Password</Text>
       <TextInput
-        placeholder="Enter Your Last Name"
+        secureTextEntry={true}
+        placeholder="Enter Your Password"
         style={styles.textInputStyle}
         onChangeText={setLastName}
         value={lastName}
@@ -31,7 +44,7 @@ export default function App() {
         ]}
         onPress={() => setResult(name + " " + lastName)}
       >
-        <Text style={styles.buttonText}>Save</Text>
+        <Text style={styles.buttonText}>Login</Text>
       </Pressable>
     </View>
   );
@@ -67,5 +80,13 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     color: "white",
+  },
+  image: {
+    width: 100,
+    height: 100,
+  },
+  welcome: {
+    fontWeight: "bold",
+    fontSize: 26,
   },
 });
