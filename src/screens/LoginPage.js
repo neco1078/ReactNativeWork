@@ -1,14 +1,7 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  Pressable,
-  Image,
-} from "react-native";
+import { StyleSheet, Text, View, Image } from "react-native";
 import { useState } from "react";
 
-import { Loading, CustomTextInput } from "../components/";
+import { Loading, CustomTextInput, CustomButton } from "../components/";
 const LoginPage = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -35,25 +28,22 @@ const LoginPage = ({ navigation }) => {
         handleValue={password}
         handlePlaceholder="Enter Your Password"
       />
+      <CustomButton
+        buttonText="Login"
+        setWidth="80%"
+        handleOnPress={() => setIsLoading(true)}
+        buttonColor="blue"
+        pressedButtonColor="gray"
+      />
 
-      <Pressable
-        style={({ pressed }) => [
-          { backgroundColor: pressed ? "gray" : "blue" },
-          styles.button,
-        ]}
-        onPress={() => setIsLoading(true)}
-      >
-        <Text style={styles.buttonText}>Login</Text>
-      </Pressable>
-      <Pressable
-        style={({ pressed }) => [
-          { backgroundColor: pressed ? "lightgray" : "gray", marginTop: 50 },
-          styles.signupButton,
-        ]}
-        onPress={() => navigation.navigate("Signup")}
-      >
-        <Text style={styles.buttonText}>Signup</Text>
-      </Pressable>
+      <CustomButton
+        buttonText="Sign Up"
+        setWidth="30%"
+        handleOnPress={() => setIsLoading(true)}
+        buttonColor="gray"
+        pressedButtonColor="lightgray"
+      />
+
       {isLoading ? (
         <Loading changeIsLoading={() => setIsLoading(false)} />
       ) : null}
@@ -72,20 +62,6 @@ const styles = StyleSheet.create({
     width: "80%",
   },
 
-  button: {
-    borderWidth: 1,
-    width: "80%",
-    height: 50,
-    borderRadius: 10,
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 20,
-  },
-  buttonText: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: "white",
-  },
   image: {
     width: 100,
     height: 100,
