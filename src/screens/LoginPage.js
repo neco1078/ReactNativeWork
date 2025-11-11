@@ -21,23 +21,26 @@ const LoginPage = ({ navigation }) => {
         source={require("../../assets/images/login-icon.png")}
       />
       <Text style={styles.welcome}>Welcome {result}</Text>
-      <Text>Email</Text>
-      <TextInput
-        inputMode="email"
-        placeholder="Enter Your Email"
-        style={styles.textInputStyle}
-        onChangeText={(value) => setName(value)}
-        value={name}
-        keyboardType="default"
-      />
-      <Text>Password</Text>
-      <TextInput
-        secureTextEntry={true}
-        placeholder="Enter Your Password"
-        style={styles.textInputStyle}
-        onChangeText={setLastName}
-        value={lastName}
-      />
+      <View style={styles.inputContainer}>
+        <Text style={styles.inputBoxText}>Email</Text>
+        <TextInput
+          inputMode="email"
+          placeholder="Enter Your Email"
+          style={styles.textInputStyle}
+          onChangeText={(value) => setName(value)}
+          value={name}
+        />
+      </View>
+      <View style={styles.inputContainer}>
+        <Text style={styles.inputBoxText}>Password</Text>
+        <TextInput
+          secureTextEntry={true}
+          placeholder="Enter Your Password"
+          style={styles.textInputStyle}
+          onChangeText={setLastName}
+          value={lastName}
+        />
+      </View>
       <Pressable
         style={({ pressed }) => [
           { backgroundColor: pressed ? "gray" : "blue" },
@@ -70,11 +73,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  inputContainer: {
+    width: "80%",
+    borderWidth: 2,
+  },
   textInputStyle: {
     height: 50,
     borderColor: "gray",
     borderWidth: 1,
-    width: "80%",
+    width: "100%",
     borderRadius: 10,
     marginVertical: 10,
     paddingLeft: 10,
@@ -110,4 +117,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  inputBoxText: { fontWeight: "bold", alignSelf: "flex-start" },
 });

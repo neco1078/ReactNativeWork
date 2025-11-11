@@ -1,8 +1,7 @@
-
 import { NavigationContainer } from "@react-navigation/native";
-import { AuthStack } from "./authStack";
-import { UserStack } from "./userStack";
-const rootNavigation = () => {
+import AuthStack from "./AuthStack";
+import UserStack from "./UserStack";
+const RootNavigation = () => {
   const isAuth = false; //buraya auth durumunu kontrol eden bir mantık gelecek
   return (
     <NavigationContainer>
@@ -11,6 +10,4 @@ const rootNavigation = () => {
   );
 };
 
-export default rootNavigation;
-
-
+export default RootNavigation;
