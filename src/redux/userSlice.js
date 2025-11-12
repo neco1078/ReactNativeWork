@@ -23,14 +23,13 @@ export const login = createAsyncThunk(
 );
 
 const initialState = {
-  email: null,
-  password: null,
+  // email: null,
+  // password: null,
   isLoading: false,
   isAuth: false,
-  User: {
-    userEmail: "test@test.com",
-    userPassword: "1234",
-  },
+  token: null,
+  user: null,
+  error: null,
 };
 
 export const userSlice = createSlice({
@@ -46,34 +45,38 @@ export const userSlice = createSlice({
     setIsLoading: (state, action) => {
       state.isLoading = action.payload;
     },
-    setLogin: (state, action) => {
-      if (
-        state.email === state.User.userEmail &&
-        state.password === state.User.userPassword
-      ) {
-        state.isAuth = true;
-      } else {
-        state.isAuth = false;
-      }
-    },
+    // setLogin: (state, action) => {
+    //   if (
+    //     state.email === state.User.userEmail &&
+    //     state.password === state.User.userPassword
+    //   ) {
+    //     state.isAuth = true;
+    //   } else {
+    //     state.isAuth = false;
+    //   }
+    // },
   },
   extraReducers: (builder) => {
     builder
       .addCase(login.pending, (state) => {
-        state.isLoading = true;})
+        state.isLoading = true;
+      })
       .addCase(login.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isAuth = true;
+        state.user = action.payload.user;
+        state.token = action.payload.token;
       })
       .addCase(login.rejected, (state, action) => {
         state.isLoading = false;
         state.isAuth = false;
+        state.error = action.error.message;
       });
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setEmail, setPassword, setIsLoading, setLogin } =
+export const { setEmail, setPassword, setIsLoading} =
   userSlice.actions;
 
 export default userSlice.reducer;
