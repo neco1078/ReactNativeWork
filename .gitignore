@@ -2,8 +2,9 @@
 
 # dependencies
 node_modules/
-# local env files
-.env*.local
+# tüm env dosyaları
+.env
+.env.*
 # Expo
 .expo/
 dist/
