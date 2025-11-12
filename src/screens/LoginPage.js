@@ -14,7 +14,7 @@ const LoginPage = ({ navigation }) => {
   // userSlice içerisindeki verilerin okunması
   // const email = useSelector((state) => state.user.email);
   // const user = useSelector((state) => state.user);
-  const { isLoading } = useSelector((state) => state.user);
+  const { isLoading, error } = useSelector((state) => state.user);
   //userSlice içerisindeki reducer yapıların verilerin güncellenmesi
   const dispatch = useDispatch();
   return (
@@ -27,7 +27,7 @@ const LoginPage = ({ navigation }) => {
       <CustomTextInput
         title="Email"
         isSecureText={false}
-        handleOnChangeText={(text) => setEmail(text)}
+        handleOnChangeText={(text) => setEmail(text.toLowerCase())}
         handleValue={email}
         handlePlaceholder="Enter Your Email"
       />
@@ -38,6 +38,7 @@ const LoginPage = ({ navigation }) => {
         handleValue={password}
         handlePlaceholder="Enter Your Password"
       />
+      <Text style={{ color: "white" }}>{error}</Text>
       <CustomButton
         buttonText="Login"
         setWidth="80%"
