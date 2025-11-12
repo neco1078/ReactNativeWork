@@ -4,6 +4,8 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 export const login = createAsyncThunk(
   "user/login",
   async ({ email, password }) => {
+    // console.log(email);
+    // console.log(password);
     try {
       const auth = getAuth();
       const userCredential = await signInWithEmailAndPassword(
@@ -76,7 +78,6 @@ export const userSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { setEmail, setPassword, setIsLoading} =
-  userSlice.actions;
+export const { setEmail, setPassword, setIsLoading } = userSlice.actions;
 
 export default userSlice.reducer;

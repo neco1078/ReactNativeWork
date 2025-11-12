@@ -3,11 +3,12 @@ import { useState } from "react";
 
 import { Loading, CustomTextInput, CustomButton } from "../components/";
 import { useDispatch, useSelector } from "react-redux";
-import { setEmail, setPassword, setIsLoading } from "../redux/userSlice";
+import { setIsLoading } from "../redux/userSlice";
 import { login } from "../redux/userSlice";
 const LoginPage = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   // const [isLoading, setIsLoading] = useState(false);
 
   // userSlice içerisindeki verilerin okunması
@@ -40,7 +41,7 @@ const LoginPage = ({ navigation }) => {
       <CustomButton
         buttonText="Login"
         setWidth="80%"
-        handleOnPress={() => dispatch(login(email, password))}
+        handleOnPress={() => dispatch(login({ email, password }))}
         buttonColor="blue"
         pressedButtonColor="gray"
       />
