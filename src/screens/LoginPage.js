@@ -5,11 +5,11 @@ import { Loading, CustomTextInput, CustomButton } from "../components/";
 const LoginPage = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [result, setResult] = useState("");
+  
   const [isLoading, setIsLoading] = useState(false);
   return (
     <View style={styles.container}>
-      <Text style={styles.welcome}>Welcome {result}</Text>
+      <Text style={styles.welcome}>Welcome</Text>
       <Image
         style={styles.image}
         source={require("../../assets/images/login-icon.png")}
@@ -39,7 +39,7 @@ const LoginPage = ({ navigation }) => {
       <CustomButton
         buttonText="Sign Up"
         setWidth="30%"
-        handleOnPress={() => setIsLoading(true)}
+        handleOnPress={() => navigation.navigate("Signup")}
         buttonColor="gray"
         pressedButtonColor="lightgray"
       />
