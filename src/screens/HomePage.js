@@ -12,10 +12,13 @@ import { db } from "../../firebaseConfig";
 import { CustomButton } from "../components";
 import { useEffect, useState } from "react";
 import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
-
+import { useDispatch } from "react-redux";
+import { logout } from "../redux/userSlice";
 const HomePage = () => {
   const [data, setData] = useState([]);
   const [updateTheData, setUpdateTheData] = useState("");
+  const dispatch = useDispatch();
+
   console.log("getdata:", data);
   const addData = async () => {
     try {
@@ -59,6 +62,10 @@ const HomePage = () => {
     } catch (error) {
       console.log("updatedata line 57", error);
     }
+  };
+
+  const handleLogOut = async () => {
+    dispatch(logout());
   };
 
   useEffect(() => {
@@ -127,6 +134,13 @@ const HomePage = () => {
         buttonColor={"blue"}
         pressedButtonColor={"gray"}
         handleOnPress={updateData}
+      />
+      <CustomButton
+        buttonText="Log Out"
+        setWidth={"40%"}
+        buttonColor={"red"}
+        pressedButtonColor={"gray"}
+        handleOnPress={handleLogOut}
       />
     </View>
   );
