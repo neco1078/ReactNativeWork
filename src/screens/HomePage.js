@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import {
   collection,
   addDoc,
@@ -11,9 +11,11 @@ import {
 import { db } from "../../firebaseConfig";
 import { CustomButton } from "../components";
 import { useEffect, useState } from "react";
+import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 
 const HomePage = () => {
   const [data, setData] = useState([]);
+  const [updateTheData, setUpdateTheData] = useState("");
   console.log("getdata:", data);
   const addData = async () => {
     try {
@@ -22,6 +24,7 @@ const HomePage = () => {
         content: "React native tutorial for beginners",
         lesson: 95,
       });
+      getData();
       console.log("Document written with ID: ", docRef.id);
     } catch (e) {
       console.error("Error adding document: ", e);
@@ -44,14 +47,14 @@ const HomePage = () => {
   };
 
   const deleteData = async (id) => {
-    await deleteDoc(doc(db, "reactNativeLesson", "MHGnsbOhjxj9jd6qRb2G"));
+    await deleteDoc(doc(db, "reactNativeLesson", id));
     getData();
   };
 
   const updateData = async (id) => {
     try {
-      const lessonData = doc(db, "reactNativeLesson", "pQUttBuwpbSC6mxV5RJe");
-      updateDoc(lessonData, { lesson: 2000 });
+      const lessonData = doc(db, "reactNativeLesson", id);
+      updateDoc(lessonData, { content: updateTheData });
       getData();
     } catch (error) {
       console.log("updatedata line 57", error);
@@ -68,13 +71,30 @@ const HomePage = () => {
   return (
     <View style={styles.container}>
       <Text>HomePage</Text>
+      <TextInput
+        value={updateTheData}
+        onChangeText={setUpdateTheData}
+        placeholder="enter your data"
+        style={{
+          borderWidth: 1,
+          width: "50%",
+          paddingVertical: 10,
+          textAlign: "center",
+          marginBottom: 30,
+        }}
+      />
       {data.length > 0 ? (
         data.map((item, index) => (
-          <View key={index}>
+          <Pressable
+            key={index}
+            onPress={() => {
+              updateData(item.id);
+            }}
+          >
             <Text>Title: {item.title}</Text>
             <Text>Content: {item.content}</Text>
             <Text>Lesson: {item.lesson}</Text>
-          </View>
+          </Pressable>
         ))
       ) : (
         <Text>No data yet</Text>
