@@ -7,6 +7,7 @@ import {
   FlatList,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import Animated, { BounceIn } from "react-native-reanimated";
 import {
   collection,
   addDoc,
@@ -85,12 +86,15 @@ const HomePage = () => {
   }, []);
   const renderItem = ({ item }) => {
     return (
-      <View style={styles.flatListContainer}>
+      <Animated.View
+        style={styles.flatListContainer}
+        entering={BounceIn.duration(500)}
+      >
         <Text>{item.id}</Text>
         <Text>Title: {item.title}</Text>
         <Text>Content: {item.content}</Text>
         <Text>Lesson: {item.lesson}</Text>
-      </View>
+      </Animated.View>
     );
   };
 
