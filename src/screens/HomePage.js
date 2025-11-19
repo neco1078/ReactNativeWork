@@ -25,75 +25,77 @@ import {
 import { db } from "../../firebaseConfig";
 import { CustomButton } from "../components";
 import { useEffect, useState } from "react";
-import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
-import { useDispatch } from "react-redux";
+import { setUserInput, saveData } from "../redux/dataSlice";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../redux/userSlice";
 const HomePage = () => {
-  const [data, setData] = useState([]);
+  //const [data, setData] = useState([]);
   const [updateTheData, setUpdateTheData] = useState("");
   const dispatch = useDispatch();
+  const { data, userInput } = useSelector((state) => state.data);
+  //console.log("getdata:", data);
+  // const addData = async () => {
+  //   try {
+  //     const docRef = await addDoc(collection(db, "reactNativeLesson"), {
+  //       title: "Zero to Hero",
+  //       content: "React native tutorial for beginners",
+  //       lesson: 95,
+  //     });
+  //     getData();
+  //     console.log("Document written with ID: ", docRef.id);
+  //   } catch (e) {
+  //     console.error("Error adding document: ", e);
+  //   }
+  // };
+  // const saveData = async () => {
+  //   try {
+  //     const docRef = await addDoc(collection(db, "todolist"), {
+  //       title: "Zero to Hero",
+  //       content: "React native tutorial for beginners",
+  //       lesson: 95,
+  //     });
+  //     getData();
+  //     console.log("Document written with ID: ", docRef.id);
+  //   } catch (e) {
+  //     console.error("Error adding document: ", e);
+  //   }
+  // };
+  // const getData = async () => {
+  //   const querySnapshot = await getDocs(collection(db, "reactNativeLesson"));
+  //   // querySnapshot.forEach((doc) => {
+  //   //   const data = doc.data();
 
-  console.log("getdata:", data);
-  const addData = async () => {
-    try {
-      const docRef = await addDoc(collection(db, "reactNativeLesson"), {
-        title: "Zero to Hero",
-        content: "React native tutorial for beginners",
-        lesson: 95,
-      });
-      getData();
-      console.log("Document written with ID: ", docRef.id);
-    } catch (e) {
-      console.error("Error adding document: ", e);
-    }
-  };
-  const saveData = async () => {
-    try {
-      const docRef = await addDoc(collection(db, "todolist"), {
-        title: "Zero to Hero",
-        content: "React native tutorial for beginners",
-        lesson: 95,
-      });
-      getData();
-      console.log("Document written with ID: ", docRef.id);
-    } catch (e) {
-      console.error("Error adding document: ", e);
-    }
-  };
-  const getData = async () => {
-    const querySnapshot = await getDocs(collection(db, "reactNativeLesson"));
-    // querySnapshot.forEach((doc) => {
-    //   const data = doc.data();
+  //   //   console.log(data);
+  //   //   setData((prevData) => [...prevData, doc.data()]);
+  //   // });
+  //   const newData = querySnapshot.docs.map((doc) => ({
+  //     id: doc.id,
+  //     ...doc.data(),
+  //   }));
+  //   setData(newData);
+  // };
 
-    //   console.log(data);
-    //   setData((prevData) => [...prevData, doc.data()]);
-    // });
-    const newData = querySnapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-    setData(newData);
-  };
+  // const deleteData = async (id) => {
+  //   await deleteDoc(doc(db, "reactNativeLesson", id));
+  //   getData();
+  // };
 
-  const deleteData = async (id) => {
-    await deleteDoc(doc(db, "reactNativeLesson", id));
-    getData();
-  };
-
-  const updateData = async (id) => {
-    try {
-      const lessonData = doc(db, "reactNativeLesson", id);
-      updateDoc(lessonData, { content: updateTheData });
-      getData();
-    } catch (error) {
-      console.log("updatedata line 57", error);
-    }
-  };
+  // const updateData = async (id) => {
+  //   try {
+  //     const lessonData = doc(db, "reactNativeLesson", id);
+  //     updateDoc(lessonData, { content: updateTheData });
+  //     getData();
+  //   } catch (error) {
+  //     console.log("updatedata line 57", error);
+  //   }
+  // };
 
   const handleLogOut = async () => {
     dispatch(logout());
   };
-
+const handleTestInput= (text)=>{
+ dispatch(setUserInput(text))
+}
   // useEffect(() => {
   //   const fetchData = async () => {
   //     await getData();
@@ -150,26 +152,22 @@ const HomePage = () => {
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
       />
-
-      <CustomButton
-        buttonText="getdata"
-        setWidth={"40%"}
-        buttonColor={"blue"}
-        pressedButtonColor={"gray"}
-        handleOnPress={getData}
-      />
-      <TextInput
-        value={updateTheData}
-        onChangeText={setUpdateTheData}
-        placeholder="enter your data"
-        style={{
-          borderWidth: 1,
-          width: "50%",
-          paddingVertical: 10,
-          textAlign: "center",
-          marginBottom: 30,
-        }}
-      />
+      <View style={styles.userInputContainer}>
+        <TextInput
+          value={userInput}
+          onChangeText={handleTestInput}
+          placeholder="Add To Do Item"
+          style={styles.textInput}
+          placeholderTextColor={"white"}
+        />
+        <CustomButton
+          buttonText="SAVE"
+          flexValue={1}
+          buttonColor={"blue"}
+          pressedButtonColor={"gray"}
+          handleOnPress={() => dispatch(saveData(userInput))}
+        />
+      </View>
       {/* <CustomButton
         buttonText="Savedata"
         setWidth={"40%"}
@@ -241,5 +239,20 @@ const styles = StyleSheet.create({
   iconContainer: {
     flex: 1,
     alignItems: "center",
+  },
+  userInputContainer: {
+    width: "90%",
+    flexDirection: "row",
+  },
+  textInput: {
+    borderWidth: 0.3,
+    borderRadius: 5,
+    borderColor: "white",
+    flex: 3,
+    paddingVertical: 5,
+    textAlign: "center",
+
+    marginRight: 5,
+    justifyContent: "center",
   },
 });

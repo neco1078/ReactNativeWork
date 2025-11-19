@@ -5,21 +5,24 @@ import { useEffect } from "react";
 import { getAllData } from "./src/redux/dataSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Loading } from "./src/components";
-
-const App = () => {
-  const dispatch = useDispatch();
-  const { loading } = useSelector((state) => state.data);
-  if (loading) {
-    return <Loading />;
-  }
-  useEffect(() => {
-    getAllData();
-  }, []);
+const AppWrapper = () => {
   return (
     <Provider store={store}>
-      <RootNavigation />
+      <App />
     </Provider>
   );
 };
+const App = () => {
+  const dispatch = useDispatch();
+  const { loading, isSaved } = useSelector((state) => state.data);
 
-export default App;
+  useEffect(() => {
+    dispatch(getAllData());
+  }, [isSaved]);
+  if (loading) {
+    return <Loading />;
+  }
+  return <RootNavigation />;
+};
+
+export default AppWrapper;

@@ -3,7 +3,7 @@ import React from "react";
 import Animated, { FadeIn } from "react-native-reanimated";
 const CustomButton = ({
   buttonText,
-  setWidth,
+  flexValue,
   handleOnPress,
   buttonColor,
   pressedButtonColor,
@@ -14,7 +14,7 @@ const CustomButton = ({
       style={({ pressed }) => [
         {
           backgroundColor: pressed ? pressedButtonColor : buttonColor,
-          width: setWidth,
+          flex: flexValue,
         },
         styles.button,
       ]}
@@ -35,7 +35,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 20,
   },
   buttonText: {
     fontSize: 20,
