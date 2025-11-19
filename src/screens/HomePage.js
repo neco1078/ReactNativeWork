@@ -12,6 +12,7 @@ import Animated, {
   FlipInEasyX,
   PinwheelIn,
 } from "react-native-reanimated";
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 import {
   collection,
   addDoc,
@@ -94,29 +95,21 @@ const HomePage = () => {
         style={styles.flatListContainer}
         entering={FlipInEasyX.duration(500).delay((index + 1) * 100)}
       >
-        <Text>{item.id}</Text>
-        <Text>Title: {item.title}</Text>
+        <FontAwesome name="check-circle" size={24} color="black" />
+        {/* <Text>{item.id}</Text> */}
+        <View style={styles.itemContainer}>
+        <Text style={styles.itemTitle}>Title: {item.title}</Text>
         <Text>Content: {item.content}</Text>
-        <Text>Lesson: {item.lesson}</Text>
+        </View>
+        
       </Animated.View>
     );
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text>HomePage</Text>
-      <TextInput
-        value={updateTheData}
-        onChangeText={setUpdateTheData}
-        placeholder="enter your data"
-        style={{
-          borderWidth: 1,
-          width: "50%",
-          paddingVertical: 10,
-          textAlign: "center",
-          marginBottom: 30,
-        }}
-      />
+      <Text style={styles.title}>Todo List</Text>
+
       {/* {data.length > 0 ? (
         data.map((item, index) => (
           <Pressable
@@ -142,18 +135,30 @@ const HomePage = () => {
       />
 
       <CustomButton
-        buttonText="Savedata"
-        setWidth={"40%"}
-        buttonColor={"blue"}
-        pressedButtonColor={"gray"}
-        handleOnPress={addData}
-      />
-      <CustomButton
         buttonText="getdata"
         setWidth={"40%"}
         buttonColor={"blue"}
         pressedButtonColor={"gray"}
         handleOnPress={getData}
+      />
+      <TextInput
+        value={updateTheData}
+        onChangeText={setUpdateTheData}
+        placeholder="enter your data"
+        style={{
+          borderWidth: 1,
+          width: "50%",
+          paddingVertical: 10,
+          textAlign: "center",
+          marginBottom: 30,
+        }}
+      />
+      {/* <CustomButton
+        buttonText="Savedata"
+        setWidth={"40%"}
+        buttonColor={"blue"}
+        pressedButtonColor={"gray"}
+        handleOnPress={addData}
       />
       <CustomButton
         buttonText="deletedata"
@@ -175,7 +180,7 @@ const HomePage = () => {
         buttonColor={"red"}
         pressedButtonColor={"gray"}
         handleOnPress={handleLogOut}
-      />
+      /> */}
     </SafeAreaView>
   );
 };
@@ -190,18 +195,31 @@ const styles = StyleSheet.create({
     backgroundColor: "tomato",
   },
   flatListContainer: {
-    borderWidth: 1,
-    marginVertical: 5,
+    borderBottomWidth: 0.3,
+    marginVertical: 10,
+
     flex: 1,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-between",
+    flexDirection: "row",
   },
   flatList: {
-    // borderWidth: 2,
-    backgroundColor: "white",
     width: "90%",
     padding: 10,
-    textAlign: "center",
-    marginBottom: 30,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "blue",
+  },
+  itemContainer: {
+    borderWidth: 1,
+    flex: 1,
+    marginLeft: 10,
+    padding: 5,
+  },
+  itemTitle: {
+    fontWeight: "bold",
+    fontSize: 16,
   },
 });
