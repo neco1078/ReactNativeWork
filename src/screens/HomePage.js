@@ -1,4 +1,12 @@
-import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  Pressable,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  FlatList,
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import {
   collection,
   addDoc,
@@ -75,8 +83,19 @@ const HomePage = () => {
 
     fetchData();
   }, []);
+  const renderItem = ({ item }) => {
+    return (
+      <View style={styles.flatListContainer}>
+        <Text>{item.id}</Text>
+        <Text>Title: {item.title}</Text>
+        <Text>Content: {item.content}</Text>
+        <Text>Lesson: {item.lesson}</Text>
+      </View>
+    );
+  };
+
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text>HomePage</Text>
       <TextInput
         value={updateTheData}
@@ -90,7 +109,7 @@ const HomePage = () => {
           marginBottom: 30,
         }}
       />
-      {data.length > 0 ? (
+      {/* {data.length > 0 ? (
         data.map((item, index) => (
           <Pressable
             key={index}
@@ -105,7 +124,13 @@ const HomePage = () => {
         ))
       ) : (
         <Text>No data yet</Text>
-      )}
+      )} */}
+      <FlatList
+        data={data}
+        style={styles.flatList}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id}
+      />
 
       <CustomButton
         buttonText="Savedata"
@@ -142,7 +167,7 @@ const HomePage = () => {
         pressedButtonColor={"gray"}
         handleOnPress={handleLogOut}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -154,5 +179,20 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "tomato",
+  },
+  flatListContainer: {
+    borderWidth: 1,
+    marginVertical: 5,
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  flatList: {
+    // borderWidth: 2,
+    backgroundColor: "white",
+    width: "90%",
+    padding: 10,
+    textAlign: "center",
+    marginBottom: 30,
   },
 });

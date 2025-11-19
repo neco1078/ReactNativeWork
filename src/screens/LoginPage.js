@@ -26,7 +26,7 @@ const LoginPage = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.welcome}>Welcome</Text>
+      <Text style={styles.welcome}>Welcome1</Text>
       <Image
         style={styles.image}
         source={require("../../assets/images/login-icon.png")}
