@@ -12,7 +12,7 @@ import Animated, {
   FlipInEasyX,
   PinwheelIn,
 } from "react-native-reanimated";
-import FontAwesome from '@expo/vector-icons/FontAwesome';
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 import {
   collection,
   addDoc,
@@ -47,7 +47,19 @@ const HomePage = () => {
       console.error("Error adding document: ", e);
     }
   };
-
+  const saveData = async () => {
+    try {
+      const docRef = await addDoc(collection(db, "todolist"), {
+        title: "Zero to Hero",
+        content: "React native tutorial for beginners",
+        lesson: 95,
+      });
+      getData();
+      console.log("Document written with ID: ", docRef.id);
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+  };
   const getData = async () => {
     const querySnapshot = await getDocs(collection(db, "reactNativeLesson"));
     // querySnapshot.forEach((doc) => {
@@ -82,26 +94,31 @@ const HomePage = () => {
     dispatch(logout());
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      await getData();
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     await getData();
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
   const renderItem = ({ item, index }) => {
     return (
       <Animated.View
         style={styles.flatListContainer}
         entering={FlipInEasyX.duration(500).delay((index + 1) * 100)}
       >
-        <FontAwesome name="check-circle" size={24} color="black" />
+        <Pressable
+          style={styles.iconContainer}
+          onPress={() => deleteData(item.id)}
+        >
+          <FontAwesome name="check-circle" size={24} color="black" />
+          <FontAwesome name="check-circle-o" size={24} color="black" />
+        </Pressable>
         {/* <Text>{item.id}</Text> */}
         <View style={styles.itemContainer}>
-        <Text style={styles.itemTitle}>Title: {item.title}</Text>
-        <Text>Content: {item.content}</Text>
+          <Text style={styles.itemTitle}>Title: {item.title}</Text>
+          <Text>Content: {item.content}</Text>
         </View>
-        
       </Animated.View>
     );
   };
@@ -213,13 +230,16 @@ const styles = StyleSheet.create({
     color: "blue",
   },
   itemContainer: {
-    borderWidth: 1,
-    flex: 1,
+    flex: 5,
     marginLeft: 10,
     padding: 5,
   },
   itemTitle: {
     fontWeight: "bold",
     fontSize: 16,
+  },
+  iconContainer: {
+    flex: 1,
+    alignItems: "center",
   },
 });
