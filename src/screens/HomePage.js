@@ -7,7 +7,11 @@ import {
   FlatList,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Animated, { BounceIn } from "react-native-reanimated";
+import Animated, {
+  BounceIn,
+  FlipInEasyX,
+  PinwheelIn,
+} from "react-native-reanimated";
 import {
   collection,
   addDoc,
@@ -84,11 +88,11 @@ const HomePage = () => {
 
     fetchData();
   }, []);
-  const renderItem = ({ item }) => {
+  const renderItem = ({ item, index }) => {
     return (
       <Animated.View
         style={styles.flatListContainer}
-        entering={BounceIn.duration(500)}
+        entering={FlipInEasyX.duration(500).delay((index + 1) * 100)}
       >
         <Text>{item.id}</Text>
         <Text>Title: {item.title}</Text>
@@ -129,7 +133,8 @@ const HomePage = () => {
       ) : (
         <Text>No data yet</Text>
       )} */}
-      <FlatList
+      <Animated.FlatList
+        entering={PinwheelIn}
         data={data}
         style={styles.flatList}
         renderItem={renderItem}

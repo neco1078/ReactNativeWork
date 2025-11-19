@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, Pressable } from "react-native";
 import React from "react";
-
+import Animated, { FadeIn } from "react-native-reanimated";
 const CustomButton = ({
   buttonText,
   setWidth,
@@ -8,6 +8,7 @@ const CustomButton = ({
   buttonColor,
   pressedButtonColor,
 }) => {
+  const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
   return (
     <Pressable
       style={({ pressed }) => [
